@@ -64,6 +64,29 @@ class JavaClass extends JavaInstance implements CoerceJavaToLua.Coercion {
 		this.jclass = this;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		if (!super.equals(o)) {
+			return false;
+		}
+		JavaClass javaClass = (JavaClass) o;
+		return Objects.equals(fields, javaClass.fields) &&
+				Objects.equals(methods, javaClass.methods) &&
+				Objects.equals(innerclasses, javaClass.innerclasses);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), fields, methods, innerclasses);
+	}
+
+	@Override
 	public LuaValue coerce(Object javaValue) {
 		return this;
 	}

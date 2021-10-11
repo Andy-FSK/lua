@@ -68,18 +68,22 @@ public class WeakTable implements Metatable {
 		this.backing = backing;
 	}
 
+	@Override
 	public boolean useWeakKeys() {
 		return weakkeys;
 	}
 
+	@Override
 	public boolean useWeakValues() {
 		return weakvalues;
 	}
 
+	@Override
 	public LuaValue toLuaValue() {
 		return backing;
 	}
 
+	@Override
 	public Slot entry(LuaValue key, LuaValue value) {
 		value = value.strongvalue();
 		if ( value == null ) {
@@ -110,10 +114,12 @@ public class WeakTable implements Metatable {
 			this.next = next;
 		}
 
-		public abstract int keyindex( int hashMask );
+		@Override
+		public abstract int keyindex(int hashMask );
 
 		public abstract Slot set(LuaValue value);
 
+		@Override
 		public StrongSlot first() {
 			LuaValue key = strongkey();
 			LuaValue value = strongvalue();
@@ -126,25 +132,30 @@ public class WeakTable implements Metatable {
 			}
 		}
 
+		@Override
 		public StrongSlot find(LuaValue key) {
 			StrongSlot first = first();
 			return ( first != null ) ? first.find( key ) : null;
 		}
 
+		@Override
 		public boolean keyeq(LuaValue key) {
 			StrongSlot first = first();
 			return ( first != null ) && first.keyeq( key );
 		}
 
+		@Override
 		public Slot rest() {
 			return next;
 		}
 
+		@Override
 		public int arraykey(int max) {
 			// Integer keys can never be weak.
 			return 0;
 		}
 
+		@Override
 		public Slot set(StrongSlot target, LuaValue value) {
 			LuaValue key = strongkey();
 			if ( key != null && target.find( key ) != null ) {
@@ -159,7 +170,8 @@ public class WeakTable implements Metatable {
 			}
 		}
 
-		public Slot add( Slot entry ) {
+		@Override
+		public Slot add(Slot entry ) {
 			next = ( next != null ) ? next.add( entry ) : entry;
 			if ( strongkey() != null && strongvalue() != null ) {
 				return this;
@@ -168,7 +180,8 @@ public class WeakTable implements Metatable {
 			}
 		}
 
-		public Slot remove( StrongSlot target ) {
+		@Override
+		public Slot remove(StrongSlot target ) {
 			LuaValue key = strongkey();
 			if ( key == null ) {
 				return next.remove( target );
@@ -181,7 +194,8 @@ public class WeakTable implements Metatable {
 			}
 		}
 
-		public Slot relink( Slot rest ) {
+		@Override
+		public Slot relink(Slot rest ) {
 			if ( strongkey() != null && strongvalue() != null ) {
 				if ( rest == null && this.next == null ) {
 					return this;
@@ -417,10 +431,12 @@ public class WeakTable implements Metatable {
 		}
 	}
 
+	@Override
 	public LuaValue wrap(LuaValue value) {
 		return weakvalues ? weaken( value ) : value;
 	}
 
+	@Override
 	public LuaValue arrayget(LuaValue[] array, int index) {
 		LuaValue value = array[index];
 		if (value != null) {

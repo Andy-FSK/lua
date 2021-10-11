@@ -32,9 +32,9 @@ import com.wiqer.lua.lib.jse.CoerceLuaToJava.Coercion;
  * java varargs handling.
  * <p>
  * This class is not used directly.  
- * It is an abstract base class for {@link lib.jse.JavaConstructor} and {@link lib.jse.JavaMethod}.
- * @see lib.jse.JavaConstructor
- * @see lib.jse.JavaMethod
+ * It is an abstract base class for {@link com.wiqer.lua.lib.jse.JavaConstructor} and {@link com.wiqer.lua.lib.jse.JavaMethod}.
+ * @see com.wiqer.lua.lib.jse.JavaConstructor
+ * @see com.wiqer.lua.lib.jse.JavaMethod
  * @see CoerceJavaToLua
  * @see CoerceLuaToJava
  */

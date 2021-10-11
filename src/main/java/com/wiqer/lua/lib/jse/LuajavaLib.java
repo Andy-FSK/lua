@@ -182,6 +182,7 @@ public class LuajavaLib extends VarArgFunction {
 			this.lobj = lobj;
 		}
 
+		@Override
 		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 			String name = method.getName();
 			LuaValue func = lobj.get(name);

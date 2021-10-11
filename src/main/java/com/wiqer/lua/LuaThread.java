@@ -23,6 +23,10 @@ package com.wiqer.lua;
 
 
 import java.lang.ref.WeakReference;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /** 
  * Subclass of {@link LuaValue} that implements
@@ -36,7 +40,7 @@ import java.lang.ref.WeakReference;
  * This is done via the constructor arguments {@link #LuaThread(Globals)} or
  * {@link #LuaThread(Globals, LuaValue)}.
  * <p> 
- * The utility classes {@link lib.jse.JsePlatform} and
+ * The utility classes {@link com.wiqer.lua.lib.jse.JsePlatform} and
  * see to it that this {@link Globals} are initialized properly.
  * <p>
  * The behavior of coroutine threads matches closely the behavior 
@@ -60,8 +64,8 @@ import java.lang.ref.WeakReference;
  *
  *   
  * @see LuaValue
- * @see lib.jse.JsePlatform
- * @see lib.CoroutineLib
+ * @see com.wiqer.lua.lib.jse.JsePlatform
+ * @see com.wiqer.lua.lib.CoroutineLib
  */
 public class LuaThread extends LuaValue {
 
@@ -104,7 +108,8 @@ public class LuaThread extends LuaValue {
 
 	/** Error message handler for this thread, if any.  */
 	public LuaValue errorfunc;
-	
+
+
 	/** Private constructor for main thread only */
 	public LuaThread(Globals globals) {
 		state = new State(globals, this, null);
@@ -190,13 +195,24 @@ public class LuaThread extends LuaValue {
 		
 		public int status = LuaThread.STATUS_INITIAL;
 
+		/**
+		 *
+		 */
+		ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(256, 20, 2, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(5000), new ThreadFactory() {
+			@Override
+			public Thread newThread(Runnable runnable) {
+				return new Thread("Coroutine-"+(++coroutine_count));
+			}
+		});
+
 		State(Globals globals, LuaThread lua_thread, LuaValue function) {
 			this.globals = globals;
 			this.lua_thread = new WeakReference(lua_thread);
 			this.function = function;
 		}
 		
-		public synchronized void run() {
+		@Override
+        public synchronized void run() {
 			try {
 				Varargs a = this.args;
 				this.args = LuaValue.NONE;
@@ -215,8 +231,8 @@ public class LuaThread extends LuaValue {
 				globals.running = new_thread;
 				this.args = args;
 				if (this.status == STATUS_INITIAL) {
-					this.status = STATUS_RUNNING; 
-					new Thread(this, "Coroutine-"+(++coroutine_count)).start();
+					this.status = STATUS_RUNNING;
+					poolExecutor.execute(this);
 				} else {
 					this.notify();
 				}

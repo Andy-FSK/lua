@@ -99,6 +99,7 @@ public class LuaJC implements Globals.Loader {
 		}
 	}
 
+	@Override
 	public LuaFunction load(Prototype p, String name, LuaValue globals) throws IOException {
 		String luaname = toStandardLuaFileName( name );
 		String classname = toStandardJavaClassName( luaname );

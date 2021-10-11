@@ -5,6 +5,7 @@ package com.wiqer.lua.luajc;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 
 public class VarInfo {
@@ -35,6 +36,28 @@ public class VarInfo {
 	public VarInfo(int slot, int pc) {
 		this.slot = slot;
 		this.pc = pc;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o != null && getClass() == o.getClass()) {
+			VarInfo varInfo = (VarInfo) o;
+			return slot == varInfo.slot &&
+					pc == varInfo.pc &&
+					allocupvalue == varInfo.allocupvalue &&
+					isreferenced == varInfo.isreferenced &&
+					Objects.equals(upvalue, varInfo.upvalue);
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(slot, pc, upvalue, allocupvalue, isreferenced);
 	}
 
 	@Override

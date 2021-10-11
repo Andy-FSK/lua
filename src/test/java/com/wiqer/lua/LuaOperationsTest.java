@@ -55,7 +55,8 @@ public class LuaOperationsTest extends TestCase {
 	private final LuaValue stringlong    = LuaValue.valueOf(samplestringlong);
 	private final LuaValue stringdouble  = LuaValue.valueOf(samplestringdouble);
 	private final LuaTable    table         = LuaValue.listOf( new LuaValue[] { LuaValue.valueOf("aaa"), LuaValue.valueOf("bbb") } );
-	private final LuaValue    somefunc      = new ZeroArgFunction() { public LuaValue call() { return NONE;}};
+	private final LuaValue    somefunc      = new ZeroArgFunction() { @Override
+	public LuaValue call() { return NONE;}};
 	private final LuaThread   thread        = new LuaThread(new Globals(), somefunc);
 	private final Prototype   proto         = new Prototype(1);
 	private final LuaClosure  someclosure   = new LuaClosure(proto,table);
@@ -157,7 +158,8 @@ public class LuaOperationsTest extends TestCase {
 
 		// function tests
 		{
-			LuaFunction f = new ZeroArgFunction() { public LuaValue call() { return globals.get("a");}};
+			LuaFunction f = new ZeroArgFunction() { @Override
+			public LuaValue call() { return globals.get("a");}};
 			assertEquals( aaa, f.call() );
 		}
 		

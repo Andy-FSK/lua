@@ -255,7 +255,12 @@ public class LuaValue extends Varargs {
 			NILS[i] = NIL;
 		}
 	}
-	
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
 	// type
 	/** Get the enumeration value for the type of this value.
 	 * @return value for this type, one of

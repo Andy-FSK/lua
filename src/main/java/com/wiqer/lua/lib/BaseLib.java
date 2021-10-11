@@ -116,6 +116,7 @@ public class BaseLib extends TwoArgFunction implements ResourceFinder {
 	 * 
 	 * Tries to open the file as a resource, which can work for JSE and JME.
 	 */
+	@Override
 	public InputStream findResource(String filename) {
 		return getClass().getResourceAsStream(filename.startsWith("/")? filename: "/"+filename);
 	}

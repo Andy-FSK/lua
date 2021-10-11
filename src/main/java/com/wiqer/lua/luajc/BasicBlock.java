@@ -6,6 +6,8 @@ package com.wiqer.lua.luajc;
 import com.wiqer.lua.Lua;
 import com.wiqer.lua.Prototype;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Vector;
 
 public class BasicBlock {
@@ -17,7 +19,31 @@ public class BasicBlock {
 	public BasicBlock(Prototype p, int pc0) {
 		this.pc0 = this.pc1 = pc0;
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		BasicBlock that = (BasicBlock) o;
+		return pc0 == that.pc0 &&
+				pc1 == that.pc1 &&
+				islive == that.islive &&
+				Arrays.equals(prev, that.prev) &&
+				Arrays.equals(next, that.next);
+	}
+
+	@Override
+	public int hashCode() {
+		int result = Objects.hash(pc0, pc1, islive);
+		result = 31 * result + Arrays.hashCode(prev);
+		result = 31 * result + Arrays.hashCode(next);
+		return result;
+	}
+
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();		

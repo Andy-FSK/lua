@@ -51,12 +51,11 @@ import java.util.Date;
  * </ul>
  * <p>
  * Typically, this library is included as part of a call to either
- * {@link lib.jse.JsePlatform#standardGlobals()} or {@link lib.jme.JmePlatform#standardGlobals()}
  * <pre> {@code
  * Globals globals = JsePlatform.standardGlobals();
  * System.out.println( globals.get("os").get("time").call() );
  * } </pre>
- * In this example the platform-specific {@link lib.jse.JseOsLib} library will be loaded, which will include
+ * In this example the platform-specific {@link com.wiqer.lua.lib.jse.JseOsLib} library will be loaded, which will include
  * the base functionality provided by this class.
  * <p>
  * To instantiate and use it directly,
@@ -70,9 +69,8 @@ import java.util.Date;
  * } </pre>
  * <p>
   * @see LibFunction
- * @see lib.jse.JseOsLib
- * @see lib.jse.JsePlatform
- * @see lib.jme.JmePlatform
+ * @see com.wiqer.lua.lib.jse.JseOsLib
+ * @see com.wiqer.lua.lib.jse.JsePlatform
  * @see <a href="http://www.lua.org/manual/5.1/manual.html#5.8">http://www.lua.org/manual/5.1/manual.html#5.8</a>
  */
 public class OsLib extends TwoArgFunction {
@@ -150,7 +148,7 @@ public class OsLib extends TwoArgFunction {
 				case DATE: {
 					String s = args.optjstring(1, "%c");
 					double t = args.isnumber(2)? args.todouble(2): time(null);
-					if (s.equals("*t")) {
+					if ("*t".equals(s)) {
 						Calendar d = Calendar.getInstance();
 						d.setTime(new Date((long)(t*1000)));
 						LuaTable tbl = LuaValue.tableOf();

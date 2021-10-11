@@ -156,7 +156,8 @@ public class TableHashTest extends TestCase {
 		final LuaTable mt = new_Table();		
 		
 		final TwoArgFunction fb = new TwoArgFunction() {
-			public LuaValue call(LuaValue tbl, LuaValue key) {
+			@Override
+            public LuaValue call(LuaValue tbl, LuaValue key) {
 				assertEquals(tbl, t);
 				return valueOf("from mt: "+key);
 			}

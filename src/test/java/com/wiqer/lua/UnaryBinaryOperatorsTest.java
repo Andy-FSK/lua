@@ -211,13 +211,15 @@ public class UnaryBinaryOperatorsTest extends TestCase {
 	}
 	
 	private static final TwoArgFunction RETURN_NIL = new TwoArgFunction() {
-		public LuaValue call(LuaValue lhs, LuaValue rhs) {
+		@Override
+        public LuaValue call(LuaValue lhs, LuaValue rhs) {
 			return NIL;
 		}
 	};
 	
 	private static final TwoArgFunction RETURN_ONE = new TwoArgFunction() {
-		public LuaValue call(LuaValue lhs, LuaValue rhs) {
+		@Override
+        public LuaValue call(LuaValue lhs, LuaValue rhs) {
 			return ONE;
 		}
 	};
@@ -518,13 +520,15 @@ public class UnaryBinaryOperatorsTest extends TestCase {
 	}
 	
 	private static final TwoArgFunction RETURN_LHS = new TwoArgFunction() {
-		public LuaValue call(LuaValue lhs, LuaValue rhs) {
+		@Override
+        public LuaValue call(LuaValue lhs, LuaValue rhs) {
 			return lhs;
 		}
 	};
 	
 	private static final TwoArgFunction RETURN_RHS = new TwoArgFunction() {
-		public LuaValue call(LuaValue lhs, LuaValue rhs) {
+		@Override
+        public LuaValue call(LuaValue lhs, LuaValue rhs) {
 			return rhs;
 		}
 	};

@@ -26,6 +26,7 @@ import com.wiqer.lua.compiler.LexState.ConsControl;
 import com.wiqer.lua.compiler.LexState.expdesc;
 
 import java.util.Hashtable;
+import java.util.Objects;
 
 
 public class FuncState extends Constants {
@@ -511,6 +512,37 @@ public class FuncState extends Constants {
 		}
 		f.k[this.nk++] = v;
 		return idx;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		FuncState funcState = (FuncState) o;
+		return pc == funcState.pc &&
+				lasttarget == funcState.lasttarget &&
+				nk == funcState.nk &&
+				np == funcState.np &&
+				firstlocal == funcState.firstlocal &&
+				nlocvars == funcState.nlocvars &&
+				nactvar == funcState.nactvar &&
+				nups == funcState.nups &&
+				freereg == funcState.freereg &&
+				Objects.equals(f, funcState.f) &&
+				Objects.equals(h, funcState.h) &&
+				Objects.equals(prev, funcState.prev) &&
+				Objects.equals(ls, funcState.ls) &&
+				Objects.equals(bl, funcState.bl) &&
+				Objects.equals(jpc, funcState.jpc);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(f, h, prev, ls, bl, pc, lasttarget, jpc, nk, np, firstlocal, nlocvars, nactvar, nups, freereg);
 	}
 
 	int stringK(LuaString s) {

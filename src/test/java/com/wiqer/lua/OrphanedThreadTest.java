@@ -139,7 +139,8 @@ public class OrphanedThreadTest extends TestCase {
 		public NormalFunction(Globals globals) {
 			this.globals = globals;
 		}
-		public LuaValue call(LuaValue arg) {
+		@Override
+        public LuaValue call(LuaValue arg) {
 			System.out.println("in normal.1, arg is "+arg);
 			arg = globals.yield(ONE).arg1();
 			System.out.println("in normal.2, arg is "+arg);
@@ -154,7 +155,8 @@ public class OrphanedThreadTest extends TestCase {
 		public EarlyCompletionFunction(Globals globals) {
 			this.globals = globals;
 		}
-		public LuaValue call(LuaValue arg) {
+		@Override
+        public LuaValue call(LuaValue arg) {
 			System.out.println("in early.1, arg is "+arg);
 			arg = globals.yield(ONE).arg1();
 			System.out.println("in early.2, arg is "+arg);
@@ -167,7 +169,8 @@ public class OrphanedThreadTest extends TestCase {
 		public AbnormalFunction(Globals globals) {
 			this.globals = globals;
 		}
-		public LuaValue call(LuaValue arg) {
+		@Override
+        public LuaValue call(LuaValue arg) {
 			System.out.println("in abnormal.1, arg is "+arg);
 			arg = globals.yield(ONE).arg1();
 			System.out.println("in abnormal.2, arg is "+arg);

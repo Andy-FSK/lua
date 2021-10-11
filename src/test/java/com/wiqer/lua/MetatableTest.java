@@ -37,7 +37,8 @@ public class MetatableTest extends TestCase {
 	
 	private final LuaValue    string        = LuaValue.valueOf(samplestring);
 	private final LuaTable    table         = LuaValue.tableOf();
-	private final LuaFunction function      = new ZeroArgFunction() { public LuaValue call() { return NONE;}};
+	private final LuaFunction function      = new ZeroArgFunction() { @Override
+	public LuaValue call() { return NONE;}};
 	private final LuaThread   thread        = new LuaThread(new Globals(), function);
 	private final LuaClosure  closure       = new LuaClosure(new Prototype(), new LuaTable());
 	private final LuaUserdata userdata      = LuaValue.userdataOf(sampleobject);
@@ -166,7 +167,8 @@ public class MetatableTest extends TestCase {
 		
 		// plain metatable
 		mt.set( LuaValue.INDEX, new TwoArgFunction() {
-			public LuaValue call(LuaValue arg1, LuaValue arg2) {
+			@Override
+            public LuaValue call(LuaValue arg1, LuaValue arg2) {
 				return LuaValue.valueOf( arg1.typename()+"["+arg2.tojstring()+"]=xyz" );
 			}
 			

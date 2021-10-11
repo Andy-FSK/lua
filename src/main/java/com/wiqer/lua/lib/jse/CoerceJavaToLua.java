@@ -65,58 +65,67 @@ public class CoerceJavaToLua {
 	};
 	
 	private static final class BoolCoercion implements Coercion {
-		public LuaValue coerce( Object javaValue ) {
+		@Override
+		public LuaValue coerce(Object javaValue ) {
 			Boolean b = (Boolean) javaValue;
 			return b.booleanValue()? LuaValue.TRUE: LuaValue.FALSE;
 		}
 	}
 	
 	private static final class IntCoercion implements Coercion {
-		public LuaValue coerce( Object javaValue ) {
+		@Override
+		public LuaValue coerce(Object javaValue ) {
 			Number n = (Number) javaValue;
 			return LuaInteger.valueOf( n.intValue() );
 		}
 	}
 
 	private static final class CharCoercion implements Coercion {
-		public LuaValue coerce( Object javaValue ) {
+		@Override
+		public LuaValue coerce(Object javaValue ) {
 			Character c = (Character) javaValue;
 			return LuaInteger.valueOf( c.charValue() );
 		}
 	}
 
 	private static final class DoubleCoercion implements Coercion {
-		public LuaValue coerce( Object javaValue ) {
+		@Override
+		public LuaValue coerce(Object javaValue ) {
 			Number n = (Number) javaValue;
 			return LuaDouble.valueOf( n.doubleValue() );
 		}
 	}
 
 	private static final class StringCoercion implements Coercion {
-		public LuaValue coerce( Object javaValue ) {
+		@Override
+		public LuaValue coerce(Object javaValue ) {
 			return LuaString.valueOf( javaValue.toString() );
 		}
 	}
 
 	private static final class BytesCoercion implements Coercion {
-		public LuaValue coerce( Object javaValue ) {
+		@Override
+		public LuaValue coerce(Object javaValue ) {
 			return LuaValue.valueOf((byte[]) javaValue);
 		}
 	}
 
 	private static final class ClassCoercion implements Coercion {
-		public LuaValue coerce( Object javaValue ) {
+		@Override
+		public LuaValue coerce(Object javaValue ) {
 			return JavaClass.forClass((Class) javaValue);
 		}
 	}
 
 	private static final class InstanceCoercion implements Coercion {
+		@Override
 		public LuaValue coerce(Object javaValue) {
 			return new JavaInstance(javaValue);
 		}
 	}
 
 	private static final class ArrayCoercion implements Coercion {
+		@Override
 		public LuaValue coerce(Object javaValue) {
 			// should be userdata? 
 			return new JavaArray(javaValue);
@@ -124,7 +133,8 @@ public class CoerceJavaToLua {
 	}
 
 	private static final class LuaCoercion implements Coercion {
-		public LuaValue coerce( Object javaValue ) {
+		@Override
+		public LuaValue coerce(Object javaValue ) {
 			return (LuaValue) javaValue;
 		}
 	}
